@@ -8,9 +8,9 @@ fi
 
 do_name=$1
 
-apt-get update && apt-get -y upgrade
+#apt-get update && apt-get -y upgrade
 apt-get -y install nginx socat
-hostnamectl set-hostname $do_name
+#hostnamectl set-hostname $do_name
 bash <(curl -L -s https://install.direct/go.sh)
 curl https://get.acme.sh | sh
 systemctl stop nginx

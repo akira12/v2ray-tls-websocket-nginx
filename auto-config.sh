@@ -11,11 +11,12 @@ do_name=$1
 #apt-get update && apt-get -y upgrade
 apt-get -y install nginx socat
 #hostnamectl set-hostname $do_name
-bash <(curl -L -s https://install.direct/go.sh)
+#bash <(curl -L -s https://install.direct/go.sh)
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 curl https://get.acme.sh | sh
 systemctl stop nginx
 ~/.acme.sh/acme.sh --issue -d $do_name --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $do_name --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
+~/.acme.sh/acme.sh --installcert -d $do_name --fullchainpath /usr/local/etc/v2ray/v2ray.crt --keypath /usr/local/etc/v2ray/v2ray.key --ecc
 cat <<EOF >>/etc/nginx/sites-available/ssl
 server {
     listen 443 ssl default_server;
@@ -23,8 +24,8 @@ server {
     root /var/www/html;
     index index.html index.htm index.nginx-debian.html;
     ssl on;
-    ssl_certificate       /etc/v2ray/v2ray.crt;
-    ssl_certificate_key   /etc/v2ray/v2ray.key;
+    ssl_certificate       /usr/local/etc/v2ray/v2ray.crt;
+    ssl_certificate_key   /usr/local/etc/v2ray/v2ray.key;
     ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers           HIGH:!aNULL:!MD5;
     server_name           $do_name;
@@ -42,8 +43,8 @@ server {
 }
 EOF
 ln -s /etc/nginx/sites-available/ssl /etc/nginx/sites-enabled/
-rm -f /etc/v2ray/config.json
-cat <<EOF >>/etc/v2ray/config.json
+rm -f /usr/local/etc/v2ray/config.json
+cat <<EOF >>/usr/local/etc/v2ray/config.json
 {
   "log": {
     "access": "/var/log/v2ray/access.log",

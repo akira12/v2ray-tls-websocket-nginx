@@ -50,5 +50,5 @@ Note: `domain_name` should have DNS A record configured pointing at the _public_
 * Nginx: `/etc/nginx`
 * Websocket port (internal): `10000`
 * Log files: `/var/log/v2ray` (loglevel: info)
-* V2Ray config: `/etc/v2ray/config.json`
+* V2Ray config: `/usr/local/etc/v2ray/config.json`
 * Let’s Encrypt [certificate duration](https://letsencrypt.org/2015/11/09/why-90-days.html): `90 days`
